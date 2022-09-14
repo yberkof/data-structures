@@ -406,6 +406,25 @@ public class DoublyLinkedList<E> {
         }
     }
 
+    public void selectionSort(Comparator<E> comparator) {
+        Node<E> ref = head;
+        while (ref != null) {
+            Node<E> min = findMin(ref, tail, comparator);
+            swap(ref, min);
+            ref = ref.next;
+        }
+
+    }
+
+    private Node<E> findMin(Node<E> ref, Node<E> tail, Comparator<E> comparator) {
+        Node<E> min = ref;
+        while (ref != null) {
+            if (comparator.compare(min.data, ref.data) > 0)
+                min = ref;
+            ref = ref.next;
+        }
+        return min;
+    }
 //    private void partition(Node<E> head, Node<E> tail, Node<E> pivot, Comparator<E> comparator) {
 //        System.out.print("( Pivot: " + pivot.data + " ");
 //        Node<E> ref = head;
