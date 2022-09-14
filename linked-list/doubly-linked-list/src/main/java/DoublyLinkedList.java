@@ -382,33 +382,58 @@ public class DoublyLinkedList<E> {
     }
 
     private void quickSort(Node<E> head, Node<E> tail, Comparator<E> comparator) {
-        if (head != tail && tail.next != head) {
+        if (tail != null && tail.next != head) {
             Node<E> pivot = tail;
-            partition(head, tail, pivot, comparator);
+            Node<E> ref = head;
+            Node<E> current = pivot;
+            Node<E> endNode = tail;
+            while (ref != endNode) {
+                Node<E> next = ref.next;
+                assert (ref.data != null);
+                if (comparator.compare(ref.data, pivot.data) >= 0) {
+                    if (ref == head)
+                        head = head.next;
+                    unlink(ref);
+                    linkAfter(ref.data, current);
+                    current = current.next;
+                    tail = current;
+                }
+                ref = next;
+            }
             quickSort(head, pivot.prev, comparator);
-            quickSort(pivot, tail, comparator);
+            quickSort(pivot.next, tail, comparator);
 
         }
     }
 
-    private void partition(Node<E> head, Node<E> tail, Node<E> pivot, Comparator<E> comparator) {
-        System.out.print("( Pivot: " + pivot.data + " ");
-        Node<E> ref = head;
-        Node<E> current = pivot;
-        while (ref != tail) {
-            System.out.print("," + ref.data);
-            Node<E> next = ref.next;
-            assert (ref.data != null);
-            if (comparator.compare(ref.data, pivot.data) >= 0) {
-                unlink(ref);
-                linkAfter(ref.data, current);
-                current = current.next;
-                System.out.print(" Flipped");
-            }
-            ref = next;
+//    private void partition(Node<E> head, Node<E> tail, Node<E> pivot, Comparator<E> comparator) {
+//        System.out.print("( Pivot: " + pivot.data + " ");
+//        Node<E> ref = head;
+//        Node<E> current = pivot;
+//        Node<E> endNode = tail;
+//        while (ref != endNode) {
+//            System.out.print("," + ref.data);
+//            Node<E> next = ref.next;
+//            assert (ref.data != null);
+//            if (comparator.compare(ref.data, pivot.data) >= 0) {
+//                unlink(ref);
+//                linkAfter(ref.data, current);
+//                current = current.next;
+//                System.out.print(" Flipped");
+//            }
+//            ref = next;
+//        }
+//        System.out.print(")");
+//        System.out.println();
+//    }
+
+    void print(Node<E> head, Node<E> tail) {
+        System.out.print("(");
+        while (head != null && head.prev != tail) {
+            System.out.print(head.data + " ");
+            head = head.next;
         }
         System.out.print(")");
-        System.out.println();
     }
 
     private static class Node<E> {
