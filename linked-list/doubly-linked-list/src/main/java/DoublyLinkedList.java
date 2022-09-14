@@ -406,6 +406,9 @@ public class DoublyLinkedList<E> {
         }
     }
 
+    // 9 8 7 6 5
+// 5 8 7 6 9
+// 5 6 7 8 9
     public void selectionSort(Comparator<E> comparator) {
         Node<E> ref = head;
         while (ref != null) {
