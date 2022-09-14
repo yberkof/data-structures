@@ -425,6 +425,20 @@ public class DoublyLinkedList<E> {
         }
         return min;
     }
+
+    public void removeDuplicates(Comparator<E> comparator) {
+        Node<E> ref = head;
+        while (ref != tail) {
+            if (comparator.compare(ref.data, ref.next.data) == 0) {
+                unlink(ref.next);
+            } else {
+                ref = ref.next;
+            }
+
+        }
+    }
+
+
 //    private void partition(Node<E> head, Node<E> tail, Node<E> pivot, Comparator<E> comparator) {
 //        System.out.print("( Pivot: " + pivot.data + " ");
 //        Node<E> ref = head;
