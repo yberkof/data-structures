@@ -3,14 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-class OperationalDoublyLinkedListTest {
+class DoublyLinkedListUtilsTest {
 
     @Test
     void add() {
         String s1 = "1234";
         String s2 = "4567";
-        OperationalDoublyLinkedList first = new OperationalDoublyLinkedList();
-        OperationalDoublyLinkedList second = new OperationalDoublyLinkedList();
+        DoublyLinkedListUtils first = new DoublyLinkedListUtils();
+        DoublyLinkedListUtils second = new DoublyLinkedListUtils();
         first.add(s1, "", Integer::parseInt);
         second.add(s2, "", Integer::parseInt);
 
@@ -20,8 +20,8 @@ class OperationalDoublyLinkedListTest {
     void sum() {
         String s1 = generateNumberString(75);
         String s2 = generateNumberString(62);
-        OperationalDoublyLinkedList first = new OperationalDoublyLinkedList();
-        OperationalDoublyLinkedList second = new OperationalDoublyLinkedList();
+        DoublyLinkedListUtils first = new DoublyLinkedListUtils();
+        DoublyLinkedListUtils second = new DoublyLinkedListUtils();
         first.add(s1, "", Integer::parseInt);
         second.add(s2, "", Integer::parseInt);
         String sum = first.sum(second);
@@ -40,5 +40,17 @@ class OperationalDoublyLinkedListTest {
             sb.append(AlphaNumericString.charAt(index));
         }
         return sb.toString();
+    }
+
+
+    @Test
+    void rotate() {
+        String s1 = "123456789";
+        DoublyLinkedListUtils first = new DoublyLinkedListUtils();
+        first.add(s1, "", Integer::parseInt);
+
+        first.rotate(10);
+
+        first.print();
     }
 }

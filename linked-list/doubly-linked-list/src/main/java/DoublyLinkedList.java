@@ -4,9 +4,9 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class DoublyLinkedList<E> {
-    private transient Node<E> head;
-    private transient Node<E> tail;
-    private transient int size;
+    protected transient Node<E> head;
+    protected transient Node<E> tail;
+    protected transient int size;
 
     public DoublyLinkedList() {
         initialize();
@@ -76,7 +76,7 @@ public class DoublyLinkedList<E> {
         return f.data;
     }
 
-    private E unlinkLast(Node<E> l) {
+    protected E unlinkLast(Node<E> l) {
         if (l != tail || l == null) throw new IllegalArgumentException("");
         if (size == 1) {
             initialize();
@@ -200,7 +200,7 @@ public class DoublyLinkedList<E> {
         return unlink(node(index));
     }
 
-    private Node<E> node(int index) {
+    protected Node<E> node(int index) {
         Node<E> ref = head;
         while (index > 0) {
             ref = ref.next;
@@ -361,13 +361,17 @@ public class DoublyLinkedList<E> {
             throw new IllegalArgumentException();
         Node<E> startNode = node(start);
         Node<E> endNode = node(end);
+        reverse(startNode, endNode);
+
+
+    }
+
+    protected void reverse(Node<E> startNode, Node<E> endNode) {
         while (startNode != endNode && endNode.next != startNode) {
             swap(startNode, endNode);
             startNode = startNode.next;
             endNode = endNode.prev;
         }
-
-
     }
 
     private void swap(Node<E> startNode, Node<E> endNode) {
@@ -463,7 +467,11 @@ public class DoublyLinkedList<E> {
 //        System.out.println();
 //    }
 
-    void print(Node<E> head, Node<E> tail) {
+    void print() {
+        print(this.head,this.tail);
+    }
+
+        void print(Node<E> head, Node<E> tail) {
         System.out.print("(");
         while (head != null && head.prev != tail) {
             System.out.print(head.data + " ");
@@ -501,6 +509,18 @@ public class DoublyLinkedList<E> {
 
         public Node<E> getPrev() {
             return prev;
+        }
+
+        public void setData(E data) {
+            this.data = data;
+        }
+
+        public void setNext(Node<E> next) {
+            this.next = next;
+        }
+
+        public void setPrev(Node<E> prev) {
+            this.prev = prev;
         }
     }
 
