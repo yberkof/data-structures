@@ -12,6 +12,7 @@
         <module>linked-list</module>
         <module>linked-list/singly-link-list</module>
         <module>linked-list/doubly-linked-list</module>
+        <module>binary-tree</module>
     </modules>
 
     <properties>
