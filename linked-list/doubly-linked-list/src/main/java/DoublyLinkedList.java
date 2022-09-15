@@ -1,5 +1,7 @@
-import java.util.*;
-import java.util.function.Function;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class DoublyLinkedList<E> {
     private transient Node<E> head;
@@ -151,20 +153,6 @@ public class DoublyLinkedList<E> {
         if (e == null) throw new NullPointerException();
         linkLast(e);
         return true;
-    }
-
-    public boolean add(String text, String splitter, Function<String, E> parser) {
-        String[] strings = text.split(splitter);
-        for (String string : strings) {
-            addLast(parser.apply(string));
-        }
-        return true;
-    }
-
-    public String sum(LinkedList<E> second) {
-        String result;
-        Node<E> ref = this.tail;
-        while ()
     }
 
     public boolean remove(Object o) {
@@ -484,7 +472,15 @@ public class DoublyLinkedList<E> {
         System.out.print(")");
     }
 
-    private static class Node<E> {
+    public Node<E> getHead() {
+        return head;
+    }
+
+    public Node<E> getTail() {
+        return tail;
+    }
+
+    protected static class Node<E> {
         private E data;
         private Node<E> next;
         private Node<E> prev;
@@ -495,6 +491,17 @@ public class DoublyLinkedList<E> {
             this.prev = prev;
         }
 
+        public E getData() {
+            return data;
+        }
+
+        public Node<E> getNext() {
+            return next;
+        }
+
+        public Node<E> getPrev() {
+            return prev;
+        }
     }
 
 }
