@@ -1,31 +1,57 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinaryTree {
     protected Node root;
+    protected int size;
 
     private static Node newNode(Integer value) {
         return new Node(value, null, null);
     }
 
     public void add(Integer value) {
-        Node ref = root;
+        root = add(value, root);
+        size++;
+//        Node ref = root;
+//        if (root == null) {
+//            root = newNode(value);
+//            return;
+//        }
+//        while (true) {
+//            Node child;
+//            if (ref.data < value) {
+//                if (ref.right == null) {
+//                    ref.right = newNode(value);
+//                    break;
+//                } else ref = ref.right;
+//            } else if (ref.data > value) {
+//                child = ref.left;
+//                if (child == null) {
+//                    ref.left = newNode(value);
+//                    break;
+//                } else ref = ref.left;
+//            } else break;
+//        }
+    }
+
+
+    public Node add(Integer value, Node root) {
+
         if (root == null) {
-            root = newNode(value);
-            return;
+            return newNode(value);
         }
-        while (true) {
-            Node child;
-            if (ref.data < value) {
-                if (ref.right == null) {
-                    ref.right = newNode(value);
-                    break;
-                } else ref = ref.right;
-            } else {
-                child = ref.left;
-                if (child == null) {
-                    ref.left = newNode(value);
-                    break;
-                } else ref = ref.left;
-            }
+
+
+        if (root.data < value)
+            root.right = add(value, root.right);
+        else if (root.data > value)
+            root.left = add(value, root.left);
+        else {
+            size--;
+            return root;
         }
+
+        return root;
     }
 
     public Node search(int value) {
@@ -40,28 +66,35 @@ public class BinaryTree {
         else return search(node.right, value);
     }
 
-    void delete(int key) {
-        root = deleteRec(root, key);
+    public void delete(int key) {
+        root = delete(root, key);
+        size--;
     }
 
-    Node deleteRec(Node root, int value) {
-        if (root == null) return root;
+    private Node delete(Node root, int value) {
+        if (root == null) {
+            size++;
+            return null;
+        }
 
-        if (value < root.data) root.left = deleteRec(root.left, value);
-        else if (value > root.data) root.right = deleteRec(root.right, value);
+        if (value < root.data)
+            root.left = delete(root.left, value);
+        else if (value > root.data)
+            root.right = delete(root.right, value);
         else {
-            if (root.left == null) return root.right;
-            else if (root.right == null) return root.left;
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
 
             int minValue = minValue(root.right);
             root.data = minValue;
 
-            root.right = deleteRec(root.right, minValue);
+            root.right = delete(root.right, minValue);
         }
 
         return root;
     }
-
 
     int minValue(Node node) {
         int minv = node.data;
@@ -72,6 +105,10 @@ public class BinaryTree {
         return minv;
     }
 
+
+    public int size() {
+        return size;
+    }
 
     public void print() {
         System.out.print("");
@@ -106,6 +143,24 @@ public class BinaryTree {
         System.out.print(node.data + " ");
     }
 
+    public int catalan() {
+        int[] catalans = new int[size + 2];
+        catalans[0] = catalans[1] = 1;
+
+        for (int i = 2; i <= size; i++) {
+            catalans[i] =0;
+            for (int j = 0; j < i; j++) {
+                catalans[i] += catalans[j] * catalans[i-j-1];
+            }
+        }
+
+        return catalans[size];
+    }
+
+// ()()() ((())) ()(()) (())() (()())
+//  1 2    1->2  2->1
+//  1 2 3   1->2->3  1->3->2   2->3->2   3->2->1  3->1->2
+
     protected static class Node {
         protected Integer data;
         protected Node left;
@@ -119,5 +174,10 @@ public class BinaryTree {
 
     }
 
+//  1
+//    3
+//      4
+//   3    5
+//   2
 
 }
